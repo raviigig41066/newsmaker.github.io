@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Marwar Time News Studio</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- ================= LEFT PANEL ================= -->
+
+<div class="left">
+
+<h2>📰 Marwar Time News Studio</h2>
+
+<label>Headline</label>
+
+<textarea id="headline"
+placeholder="Headline"></textarea>
+
+<label>News</label>
+
+<textarea id="body"
+placeholder="Paste Full News"></textarea>
+
+<label>Date</label>
+
+<input
+type="text"
+id="date">
+
+<div class="btns">
+
+<button id="generate">
+Generate
+</button>
+
+<button id="download">
+Download PNG
+</button>
+
+</div>
+
+</div>
+
+<!-- ================= RIGHT PANEL ================= -->
+
+<div class="right">
+
+<canvas
+id="canvas"
+width="1920"
+height="1920">
+</canvas>
+
+</div>
+
+</div>
+
+<script src="js/layout.js"></script>
+<script src="js/textEngine.js"></script>
+<script src="js/script.js"></script>
+
+</body>
+</html>
