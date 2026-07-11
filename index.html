@@ -304,7 +304,7 @@
     const generateBtn = document.getElementById('generate');
     const downloadBtn = document.getElementById('download');
 
-    // ---------- default sample ----------
+    // ---------- default sample (original template style) ----------
     const defaultHeadline = 'मारवाड़ में बड़ी घटना, सैकड़ों लोग प्रभावित';
     const defaultBody = 'जोधपुर। मारवाड़ क्षेत्र में भारी बारिश के बाद नदियाँ उफान पर हैं। प्रशासन ने एहतियाती कदम उठाते हुए कई गाँवों को सुरक्षित स्थानों पर शिफ्ट किया है। मौसम विभाग ने आगामी 24 घंटों में और बारिश की चेतावनी दी है।';
     const defaultDate = 'शनिवार, 26 जुलाई 2026';
@@ -314,7 +314,7 @@
     if (!bodyEl.value) bodyEl.value = defaultBody;
     if (!dateEl.value) dateEl.value = defaultDate;
 
-    // ---------- drawing engine ----------
+    // ---------- drawing engine (restored original template look) ----------
     function drawNewsCard(headline, body, date) {
       const w = 1920, h = 1920;
 
@@ -335,30 +335,30 @@
       ctx.shadowColor = 'rgba(0,0,0,0.02)';
       ctx.shadowBlur = 0;
 
-      // ----- decorative top bar -----
+      // ----- decorative top bar (original) -----
       ctx.fillStyle = '#1e2b3c';
       ctx.fillRect(0, 0, w, 18);
 
-      // ----- header: Marwar Time -----
+      // ----- header: Marwar Time (original) -----
       ctx.fillStyle = '#1e2b3c';
       ctx.font = 'bold 74px "Noto Sans Devanagari", "Segoe UI", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
       ctx.fillText('📰 मारवाड़ टाइम', w/2, 52);
 
-      // sub line
+      // sub line (original)
       ctx.fillStyle = '#5b4c3b';
       ctx.font = '32px "Noto Sans Devanagari", sans-serif';
       ctx.fillText('—— समाचार स्टूडियो ——', w/2, 134);
 
-      // ---- date line ----
+      // ---- date line (original) ----
       ctx.fillStyle = '#3e4a5a';
       ctx.font = '38px "Noto Sans Devanagari", sans-serif';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'top';
       ctx.fillText(cleanDate, w - 72, 170);
 
-      // ---- decorative line ----
+      // ---- decorative line (original) ----
       ctx.beginPath();
       ctx.moveTo(60, 232);
       ctx.lineTo(w - 60, 232);
@@ -411,18 +411,18 @@
         ctx.fillText('… पूरी खबर पढ़ें', 100, bodyY);
       }
 
-      // ---- footer line ----
+      // ---- footer line (original) ----
       ctx.fillStyle = '#d4c9b8';
       ctx.fillRect(60, h - 110, w - 120, 4);
 
-      // footer text
+      // footer text (original)
       ctx.fillStyle = '#5b4c3b';
       ctx.font = '30px "Noto Sans Devanagari", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'bottom';
       ctx.fillText('⏺ मारवाड़ टाइम न्यूज़ स्टूडियो · 2026', w/2, h - 42);
 
-      // small watermark
+      // small watermark (original)
       ctx.fillStyle = '#b8a48c';
       ctx.font = '24px "Noto Sans Devanagari", sans-serif';
       ctx.textAlign = 'right';
