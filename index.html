@@ -343,7 +343,7 @@
     };
 
     // ---------- Default text ----------
-    const defaultHeadline = 'मारवाड़ में';
+    const defaultHeadline = '';
     const defaultBody = 'जोधपुर। मारवाड़ क्षेत्र में भारी बारिश के बाद नदियाँ उफान पर हैं। ';
     const defaultDate = '26/07/2026';
     
@@ -395,28 +395,11 @@
         });
         ctx.restore();
 
-        // Red border
-        ctx.shadowColor = 'rgba(255, 0, 0, 0.2)';
-        ctx.shadowBlur = 30;
-        ctx.strokeStyle = '#cc0000';
-        ctx.lineWidth = 8;
-        ctx.strokeRect(30, 30, w - 60, h - 60);
-        ctx.shadowBlur = 0;
-        ctx.strokeStyle = '#ff3333';
-        ctx.lineWidth = 3;
-        ctx.strokeRect(50, 50, w - 100, h - 100);
 
-        // Top bar
-        ctx.fillStyle = '#cc0000';
-        ctx.fillRect(60, 60, w - 120, 70);
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 48px "Noto Sans Devanagari", "Arial Black", sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('🔴 BREAKING NEWS', w/2, 95);
+
+
       }
 
-      
       // Date
       ctx.fillStyle = '#000000';
       ctx.font = 'bold 52px "Arial"';
@@ -424,14 +407,6 @@
       ctx.textBaseline = 'top';
       ctx.fillText(cleanDate, w - 610, 90);
       ctx.shadowBlur = 0;
-
-      // Decorative line
-      ctx.beginPath();
-      ctx.moveTo(100, 370);
-      ctx.lineTo(w - 100, 370);
-      ctx.strokeStyle = '#ff3333';
-      ctx.lineWidth = 3;
-      ctx.stroke();
 
       // HEADLINE
       ctx.textAlign = 'center';
@@ -455,23 +430,33 @@
       });
 
       // BODY text
-      ctx.textAlign = 'middle';
+      ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
       ctx.fillStyle = '#e0e0e0';
       ctx.font = '60px "Noto Sans Devanagari", "Segoe UI", sans-serif';
 
+      const bodyMargin = 280;   // Left + Right same margin
+      const maxBodyWidth = w - (bodyMargin * 2);
+
       const bodyStartY = Math.max(headlineY + 50, 600);
-      const maxBodyWidth = w - 200;
-      const bodyLines = wrapText(ctx, cleanBody, maxBodyWidth, 12);
+
+      const bodyLines = wrapText(ctx, cleanBody, maxBodyWidth, 20);
 
       let bodyY = bodyStartY;
       const lineHeight = 90;
-      const maxLines = 18;
+      const centerX = w / 2;
 
-      for (let i = 0; i < Math.min(bodyLines.length, maxLines); i++) {
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+      for (let i = 0; i < Math.min(bodyLines.length, 20); i++) {
+
+        ctx.shadowColor = 'rgba(0,0,0,0.5)';
         ctx.shadowBlur = 1;
-        ctx.fillText(bodyLines[i], 100, bodyY);
+
+        ctx.fillText(
+          bodyLines[i],
+          centerX,
+          bodyY
+        );
+
         ctx.shadowBlur = 0;
         bodyY += lineHeight;
       }
