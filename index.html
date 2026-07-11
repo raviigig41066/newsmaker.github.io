@@ -343,9 +343,9 @@
     };
 
     // ---------- Default text ----------
-    const defaultHeadline = 'मारवाड़ में बड़ी घटना, सैकड़ों लोग प्रभावित';
-    const defaultBody = 'जोधपुर। मारवाड़ क्षेत्र में भारी बारिश के बाद नदियाँ उफान पर हैं। प्रशासन ने एहतियाती कदम उठाते हुए कई गाँवों को सुरक्षित स्थानों पर शिफ्ट किया है। मौसम विभाग ने आगामी 24 घंटों में और बारिश की चेतावनी दी है।';
-    const defaultDate = 'शनिवार, 26 जुलाई 2026';
+    const defaultHeadline = 'मारवाड़ में';
+    const defaultBody = 'जोधपुर। मारवाड़ क्षेत्र में भारी बारिश के बाद नदियाँ उफान पर हैं। ';
+    const defaultDate = '26/07/2026';
     
     if (!headlineEl.value) headlineEl.value = defaultHeadline;
     if (!bodyEl.value) bodyEl.value = defaultBody;
@@ -416,30 +416,13 @@
         ctx.fillText('🔴 BREAKING NEWS', w/2, 95);
       }
 
-      // ----- Overlay text on template -----
-      // Header: Marwar Time
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 80px "Noto Sans Devanagari", "Segoe UI", sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-      ctx.shadowBlur = 20;
-      ctx.fillText('📰 मारवाड़ टाइम', w/2, 170);
-      ctx.shadowBlur = 0;
-
-      // Sub line
-      ctx.fillStyle = '#ff6666';
-      ctx.font = '36px "Noto Sans Devanagari", sans-serif';
-      ctx.fillText('—— समाचार स्टूडियो ——', w/2, 260);
-
+      
       // Date
-      ctx.fillStyle = '#cccccc';
-      ctx.font = '40px "Noto Sans Devanagari", sans-serif';
+      ctx.fillStyle = '#000000';
+      ctx.font = 'bold 52px "Arial"';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'top';
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-      ctx.shadowBlur = 15;
-      ctx.fillText(cleanDate, w - 100, 310);
+      ctx.fillText(cleanDate, w - 610, 90);
       ctx.shadowBlur = 0;
 
       // Decorative line
@@ -453,7 +436,7 @@
       // HEADLINE
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
-      ctx.fillStyle = '#ff2222';
+      ctx.fillStyle = '#ffef00';
       ctx.font = 'bold 100px "Noto Sans Devanagari", "Segoe UI", sans-serif';
       
       const headlineLines = wrapText(ctx, cleanHeadline, w - 200, 2);
@@ -465,61 +448,34 @@
           ctx.font = 'bold 84px "Noto Sans Devanagari", "Segoe UI", sans-serif';
         }
         ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
-        ctx.shadowBlur = 15;
+        ctx.shadowBlur = 1;
         ctx.fillText(line, w/2, headlineY);
         ctx.shadowBlur = 0;
         headlineY += 110;
       });
 
       // BODY text
-      ctx.textAlign = 'left';
+      ctx.textAlign = 'middle';
       ctx.textBaseline = 'top';
       ctx.fillStyle = '#e0e0e0';
-      ctx.font = '44px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+      ctx.font = '60px "Noto Sans Devanagari", "Segoe UI", sans-serif';
 
       const bodyStartY = Math.max(headlineY + 50, 600);
       const maxBodyWidth = w - 200;
       const bodyLines = wrapText(ctx, cleanBody, maxBodyWidth, 12);
 
       let bodyY = bodyStartY;
-      const lineHeight = 72;
-      const maxLines = 10;
+      const lineHeight = 90;
+      const maxLines = 18;
 
       for (let i = 0; i < Math.min(bodyLines.length, maxLines); i++) {
         ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-        ctx.shadowBlur = 10;
+        ctx.shadowBlur = 1;
         ctx.fillText(bodyLines[i], 100, bodyY);
         ctx.shadowBlur = 0;
         bodyY += lineHeight;
       }
 
-      if (bodyLines.length > maxLines) {
-        ctx.font = '42px "Noto Sans Devanagari", sans-serif';
-        ctx.fillStyle = '#ff6666';
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-        ctx.shadowBlur = 10;
-        ctx.fillText('… पूरी खबर पढ़ें', 100, bodyY);
-        ctx.shadowBlur = 0;
-      }
-
-      // Footer
-      ctx.fillStyle = '#ff3333';
-      ctx.fillRect(100, h - 130, w - 200, 3);
-
-      ctx.fillStyle = '#888';
-      ctx.font = '32px "Noto Sans Devanagari", sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'bottom';
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-      ctx.shadowBlur = 10;
-      ctx.fillText('⏺ मारवाड़ टाइम न्यूज़ स्टूडियो · 2026', w/2, h - 55);
-      ctx.shadowBlur = 0;
-
-      ctx.fillStyle = '#555';
-      ctx.font = '26px "Noto Sans Devanagari", sans-serif';
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'bottom';
-      ctx.fillText('marwartime.in', w - 100, h - 25);
     }
 
     // ----- Text wrapping helper -----
