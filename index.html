@@ -1,76 +1,508 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Marwar Time News Studio</title>
+  <!-- Google Font for Devanagari -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ----- RESET & BASE ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+    body {
+      background: #f2efe6;
+      font-family: 'Noto Sans Devanagari', 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
 
-<title>Marwar Time News Studio</title>
+    .container {
+      max-width: 1400px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 36px 36px 28px 28px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.06);
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 24px;
+      padding: 28px 32px;
+      transition: all 0.2s;
+    }
 
-<link rel="stylesheet" href="style.css">
+    /* ----- LEFT PANEL (inputs) ----- */
+    .left {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: #faf8f5;
+      padding: 24px 22px;
+      border-radius: 28px;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;800&display=swap" rel="stylesheet">
+    .left h2 {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #1e2b3c;
+      letter-spacing: -0.3px;
+      border-bottom: 3px solid #d4c9b8;
+      padding-bottom: 12px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
+    .left h2 span {
+      background: #c44536;
+      color: white;
+      font-size: 1rem;
+      padding: 0 12px;
+      border-radius: 40px;
+      line-height: 1.8;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.3px;
+      color: #3e4a5a;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    textarea, input[type="text"] {
+      font-family: 'Noto Sans Devanagari', sans-serif;
+      background: white;
+      border: 1px solid #d6cec0;
+      border-radius: 20px;
+      padding: 14px 18px;
+      font-size: 0.95rem;
+      transition: 0.2s;
+      width: 100%;
+      outline: none;
+      resize: vertical;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    textarea:focus, input[type="text"]:focus {
+      border-color: #b8a48c;
+      box-shadow: 0 0 0 3px rgba(184, 164, 140, 0.2);
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+
+    #body {
+      min-height: 150px;
+    }
+
+    .btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .btns button {
+      flex: 1 1 auto;
+      background: #1e2b3c;
+      border: none;
+      padding: 16px 18px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      transition: 0.15s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+      letter-spacing: 0.5px;
+      font-family: 'Noto Sans Devanagari', sans-serif;
+    }
+
+    .btns button:active {
+      transform: scale(0.96);
+    }
+
+    #generate {
+      background: #2d4b5c;
+    }
+    #generate:hover {
+      background: #1f3a4a;
+    }
+
+    #download {
+      background: #b78c6b;
+    }
+    #download:hover {
+      background: #9e7a5d;
+    }
+
+    /* ----- RIGHT PANEL (canvas) ----- */
+    .right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ece7df;
+      border-radius: 28px;
+      padding: 12px;
+      min-height: 400px;
+    }
+
+    #canvas {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      display: block;
+      border-radius: 24px;
+      background: #ffffff;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+      max-width: 100%;
+      object-fit: contain;
+      transition: 0.1s;
+    }
+
+    /* ----- 📱 MOBILE RESPONSIVE ----- */
+    @media screen and (max-width: 880px) {
+      .container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 20px 16px;
+        border-radius: 28px;
+      }
+
+      .left {
+        padding: 18px 16px;
+        order: 1;
+      }
+
+      .right {
+        order: 2;
+        padding: 8px;
+        min-height: 240px;
+      }
+
+      .left h2 {
+        font-size: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      textarea, input[type="text"] {
+        font-size: 1rem;
+        padding: 12px 16px;
+      }
+
+      .btns button {
+        padding: 14px 12px;
+        font-size: 0.95rem;
+        flex: 1 1 130px;
+      }
+
+      #canvas {
+        border-radius: 20px;
+        max-height: 480px;
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    @media screen and (max-width: 460px) {
+      body {
+        padding: 10px;
+      }
+      .container {
+        padding: 12px 10px;
+        gap: 16px;
+        border-radius: 24px;
+      }
+      .left h2 {
+        font-size: 1.3rem;
+      }
+      .left {
+        padding: 14px 12px;
+        gap: 10px;
+      }
+      .btns button {
+        font-size: 0.85rem;
+        padding: 12px 10px;
+        flex: 1 1 100%;
+      }
+      #canvas {
+        max-height: 380px;
+      }
+    }
+
+    /* small tweaks for very narrow */
+    @media screen and (max-width: 360px) {
+      .left h2 {
+        font-size: 1.1rem;
+      }
+      textarea {
+        min-height: 70px;
+      }
+      #body {
+        min-height: 100px;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
 <div class="container">
 
-<!-- ================= LEFT PANEL ================= -->
+  <!-- LEFT PANEL -->
+  <div class="left">
+    <h2>📰 Marwar Time <span>Studio</span></h2>
 
-<div class="left">
+    <label for="headline">✍️ Headline</label>
+    <textarea id="headline" placeholder="बड़ी खबर..."></textarea>
 
-<h2>📰 Marwar Time News Studio</h2>
+    <label for="body">📄 News</label>
+    <textarea id="body" placeholder="पूरी खबर यहाँ लिखें..."></textarea>
 
-<label>Headline</label>
+    <label for="date">📅 Date</label>
+    <input type="text" id="date" placeholder="26 जुलाई 2026">
 
-<textarea id="headline"
-placeholder="Headline"></textarea>
+    <div class="btns">
+      <button id="generate">✨ Generate</button>
+      <button id="download">⬇️ Download PNG</button>
+    </div>
+  </div>
 
-<label>News</label>
-
-<textarea id="body"
-placeholder="Paste Full News"></textarea>
-
-<label>Date</label>
-
-<input
-type="text"
-id="date">
-
-<div class="btns">
-
-<button id="generate">
-Generate
-</button>
-
-<button id="download">
-Download PNG
-</button>
+  <!-- RIGHT PANEL -->
+  <div class="right">
+    <canvas id="canvas" width="1920" height="1920"></canvas>
+  </div>
 
 </div>
 
-</div>
+<script>
+  (function() {
+    // ---------- DOM refs ----------
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
 
-<!-- ================= RIGHT PANEL ================= -->
+    const headlineEl = document.getElementById('headline');
+    const bodyEl = document.getElementById('body');
+    const dateEl = document.getElementById('date');
 
-<div class="right">
+    const generateBtn = document.getElementById('generate');
+    const downloadBtn = document.getElementById('download');
 
-<canvas
-id="canvas"
-width="1920"
-height="1920">
-</canvas>
+    // ---------- default sample ----------
+    const defaultHeadline = 'मारवाड़ में बड़ी घटना, सैकड़ों लोग प्रभावित';
+    const defaultBody = 'जोधपुर। मारवाड़ क्षेत्र में भारी बारिश के बाद नदियाँ उफान पर हैं। प्रशासन ने एहतियाती कदम उठाते हुए कई गाँवों को सुरक्षित स्थानों पर शिफ्ट किया है। मौसम विभाग ने आगामी 24 घंटों में और बारिश की चेतावनी दी है।';
+    const defaultDate = 'शनिवार, 26 जुलाई 2026';
 
-</div>
+    // fill defaults if empty
+    if (!headlineEl.value) headlineEl.value = defaultHeadline;
+    if (!bodyEl.value) bodyEl.value = defaultBody;
+    if (!dateEl.value) dateEl.value = defaultDate;
 
-</div>
+    // ---------- drawing engine ----------
+    function drawNewsCard(headline, body, date) {
+      const w = 1920, h = 1920;
 
-<script src="js/layout.js"></script>
-<script src="js/textEngine.js"></script>
-<script src="js/script.js"></script>
+      // clean text
+      const cleanHeadline = (headline || '').trim() || 'शीर्षक';
+      const cleanBody = (body || '').trim() || 'समाचार पाठ...';
+      const cleanDate = (date || '').trim() || 'तिथि';
 
+      // canvas size
+      canvas.width = w;
+      canvas.height = h;
+
+      // ----- background (newspaper style) -----
+      ctx.fillStyle = '#fcf8f0';
+      ctx.fillRect(0, 0, w, h);
+
+      // soft border
+      ctx.shadowColor = 'rgba(0,0,0,0.02)';
+      ctx.shadowBlur = 0;
+
+      // ----- decorative top bar -----
+      ctx.fillStyle = '#1e2b3c';
+      ctx.fillRect(0, 0, w, 18);
+
+      // ----- header: Marwar Time -----
+      ctx.fillStyle = '#1e2b3c';
+      ctx.font = 'bold 74px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText('📰 मारवाड़ टाइम', w/2, 52);
+
+      // sub line
+      ctx.fillStyle = '#5b4c3b';
+      ctx.font = '32px "Noto Sans Devanagari", sans-serif';
+      ctx.fillText('—— समाचार स्टूडियो ——', w/2, 134);
+
+      // ---- date line ----
+      ctx.fillStyle = '#3e4a5a';
+      ctx.font = '38px "Noto Sans Devanagari", sans-serif';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'top';
+      ctx.fillText(cleanDate, w - 72, 170);
+
+      // ---- decorative line ----
+      ctx.beginPath();
+      ctx.moveTo(60, 232);
+      ctx.lineTo(w - 60, 232);
+      ctx.strokeStyle = '#d4c9b8';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      // ---- HEADLINE (big, bold) ----
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = '#0f1a26';
+      ctx.font = 'bold 94px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+      
+      // word wrap for headline (max 2 lines)
+      const headlineLines = wrapText(ctx, cleanHeadline, w - 200, 2);
+      let headlineY = 280;
+      headlineLines.forEach((line, idx) => {
+        if (idx === 0) {
+          ctx.font = 'bold 94px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+        } else {
+          ctx.font = 'bold 80px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+        }
+        ctx.fillText(line, w/2, headlineY);
+        headlineY += 106;
+      });
+
+      // ---- BODY text (multi-line, justified-like) ----
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = '#1e2b3c';
+      ctx.font = '42px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+
+      const bodyStartY = Math.max(headlineY + 40, 470);
+      const maxBodyWidth = w - 180;
+      const bodyLines = wrapText(ctx, cleanBody, maxBodyWidth, 12); // max 12 lines
+
+      let bodyY = bodyStartY;
+      const lineHeight = 68;
+      const maxLines = 10; // keep inside canvas
+
+      for (let i = 0; i < Math.min(bodyLines.length, maxLines); i++) {
+        ctx.fillText(bodyLines[i], 100, bodyY);
+        bodyY += lineHeight;
+      }
+
+      // if more lines, show ellipsis
+      if (bodyLines.length > maxLines) {
+        ctx.font = '40px "Noto Sans Devanagari", sans-serif';
+        ctx.fillStyle = '#4d3e2e';
+        ctx.fillText('… पूरी खबर पढ़ें', 100, bodyY);
+      }
+
+      // ---- footer line ----
+      ctx.fillStyle = '#d4c9b8';
+      ctx.fillRect(60, h - 110, w - 120, 4);
+
+      // footer text
+      ctx.fillStyle = '#5b4c3b';
+      ctx.font = '30px "Noto Sans Devanagari", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText('⏺ मारवाड़ टाइम न्यूज़ स्टूडियो · 2026', w/2, h - 42);
+
+      // small watermark
+      ctx.fillStyle = '#b8a48c';
+      ctx.font = '24px "Noto Sans Devanagari", sans-serif';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText('marwartime.in', w - 60, h - 14);
+    }
+
+    // ----- text wrapping helper (respects Devanagari) -----
+    function wrapText(ctx, text, maxWidth, maxLines = 20) {
+      if (!text) return [''];
+      const words = text.split(' ');
+      const lines = [];
+      let currentLine = '';
+
+      for (let i = 0; i < words.length; i++) {
+        const word = words[i];
+        const testLine = currentLine + (currentLine ? ' ' : '') + word;
+        const metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && currentLine !== '') {
+          lines.push(currentLine);
+          currentLine = word;
+          if (lines.length >= maxLines) break;
+        } else {
+          currentLine = testLine;
+        }
+      }
+      if (currentLine && lines.length < maxLines) {
+        lines.push(currentLine);
+      }
+      // edge case: if a single word is too long, force break (rare)
+      if (lines.length === 0) {
+        lines.push(text);
+      }
+      return lines;
+    }
+
+    // ---------- update canvas ----------
+    function render() {
+      const headline = headlineEl.value || 'शीर्षक';
+      const body = bodyEl.value || 'समाचार...';
+      const date = dateEl.value || 'तिथि';
+      drawNewsCard(headline, body, date);
+    }
+
+    // ---------- download PNG ----------
+    function downloadPNG() {
+      // re-render to be safe
+      render();
+      const link = document.createElement('a');
+      link.download = `marwar-news-${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    // ---------- event listeners ----------
+    generateBtn.addEventListener('click', render);
+
+    downloadBtn.addEventListener('click', downloadPNG);
+
+    // also render on input change (optional)
+    [headlineEl, bodyEl, dateEl].forEach(el => {
+      el.addEventListener('input', render);
+    });
+
+    // initial render
+    render();
+
+    // handle resize – just re-render (canvas keeps quality)
+    window.addEventListener('resize', () => {
+      // no-op, canvas resolution fixed, but we keep crisp
+    });
+
+    // extra: when loading, ensure defaults are shown
+    window.addEventListener('load', function() {
+      render();
+    });
+
+    // small fix: if canvas gets blurry due to css, we keep internal resolution
+    // using fixed 1920x1920
+  })();
+</script>
 </body>
 </html>
