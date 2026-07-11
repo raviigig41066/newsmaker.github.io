@@ -6,6 +6,7 @@
   <title>Marwar Time News Studio</title>
   <!-- Google Font for Devanagari -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* ----- RESET & BASE ----- */
     * {
@@ -343,7 +344,7 @@
     };
 
     // ---------- Default text ----------
-    const defaultHeadline = '';
+    const defaultHeadline = 'सिरोही पुलिस में बड़ा फेरबदल: 11 पुलिस निरीक्षक व 8 उप निरीक्षकों के तबादले, कई थानों को मिले नए प्रभारी';
     const defaultBody = 'जोधपुर। मारवाड़ क्षेत्र में भारी बारिश के बाद नदियाँ उफान पर हैं। ';
     const defaultDate = '26/07/2026';
     
@@ -418,9 +419,9 @@
       let headlineY = 420;
       headlineLines.forEach((line, idx) => {
         if (idx === 0) {
-          ctx.font = 'bold 85px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+          ctx.font = 'bold 85px "Khand", sans-serif';
         } else {
-          ctx.font = 'bold 85px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+          ctx.font = 'bold 85px "Khand", sans-serif'
         }
         ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
         ctx.shadowBlur = 1;
@@ -432,8 +433,8 @@
       // BODY text
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
-      ctx.fillStyle = '#e0e0e0';
-      ctx.font = '60px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '65px "Khand", sans-serif'
 
       const bodyMargin = 280;   // Left + Right same margin
       const maxBodyWidth = w - (bodyMargin * 2);
