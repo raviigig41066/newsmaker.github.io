@@ -413,7 +413,7 @@
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
       ctx.fillStyle = '#ffef00';
-      ctx.font = 'bold 100px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+      ctx.font = 'bold 100px "Khand", sans-serif';
       
       const headlineLines = wrapText(ctx, cleanHeadline, w - 200, 2);
       let headlineY = 420;
@@ -427,7 +427,7 @@
         ctx.shadowBlur = 1;
         ctx.fillText(line, w/2, headlineY);
         ctx.shadowBlur = 0;
-        headlineY += 110;
+        headlineY += 100;
       });
 
       // BODY text
@@ -436,7 +436,7 @@
       ctx.fillStyle = '#ffffff';
       ctx.font = '65px "Khand", sans-serif'
 
-      const bodyMargin = 280;   // Left + Right same margin
+      const bodyMargin = 250;   // Left + Right same margin
       const maxBodyWidth = w - (bodyMargin * 2);
 
       const bodyStartY = Math.max(headlineY + 50, 600);
