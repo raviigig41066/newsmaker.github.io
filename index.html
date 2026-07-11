@@ -351,7 +351,12 @@
     if (!headlineEl.value) headlineEl.value = defaultHeadline;
     if (!bodyEl.value) bodyEl.value = defaultBody;
     if (!dateEl.value) dateEl.value = defaultDate;
-
+    
+    // ---------- Render wrapper ----------
+    function render() {
+      drawNewsCard(headlineEl.value, bodyEl.value, dateEl.value);
+    }
+    
     // ---------- Drawing engine with template background ----------
     function drawNewsCard(headline, body, date) {
       const w = 1920, h = 1920;
@@ -492,14 +497,17 @@
       return lines;
     }
 
-    // ---------- Update canvas ----------
-    function render() {
-      const headline = headlineEl.value || 'शीर्षक';
-      const body = bodyEl.value || 'समाचार...';
-      const date = dateEl.value || 'तिथि';
-      drawNewsCard(headline, body, date);
-    }
+    // ---------- Auto Today's Date ----------
+    function getTodayDate() {
+      const today = new Date();
 
+      const day = String(today.getDate()).padStart(2, '0');
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const year = today.getFullYear();
+
+      return `${day}/${month}/${year}`;
+    }
+    
     // ---------- Download PNG ----------
     function downloadPNG() {
       render();
