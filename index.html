@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>Marwar Time News Studio</title>
   <!-- Google Font for Devanagari -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     /* ----- RESET & BASE ----- */
     * {
@@ -15,7 +15,7 @@
     }
 
     body {
-      background: #f2efe6;
+      background: #1a1a1a;
       font-family: 'Noto Sans Devanagari', 'Segoe UI', sans-serif;
       min-height: 100vh;
       display: flex;
@@ -27,9 +27,9 @@
     .container {
       max-width: 1400px;
       width: 100%;
-      background: #ffffff;
+      background: #2c2c2c;
       border-radius: 36px 36px 28px 28px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 8px 16px rgba(0, 0, 0, 0.4);
       display: grid;
       grid-template-columns: 1fr 1.2fr;
       gap: 24px;
@@ -42,27 +42,28 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
-      background: #faf8f5;
+      background: #1e1e1e;
       padding: 24px 22px;
       border-radius: 28px;
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
     }
 
     .left h2 {
       font-size: 1.7rem;
       font-weight: 800;
-      color: #1e2b3c;
+      color: #ff4444;
       letter-spacing: -0.3px;
-      border-bottom: 3px solid #d4c9b8;
+      border-bottom: 3px solid #ff4444;
       padding-bottom: 12px;
       margin-bottom: 6px;
       display: flex;
       align-items: center;
       gap: 8px;
+      text-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
     }
 
     .left h2 span {
-      background: #c44536;
+      background: #ff4444;
       color: white;
       font-size: 1rem;
       padding: 0 12px;
@@ -74,7 +75,7 @@
       font-weight: 600;
       font-size: 0.9rem;
       letter-spacing: 0.3px;
-      color: #3e4a5a;
+      color: #aaa;
       margin-top: 6px;
       display: flex;
       align-items: center;
@@ -83,11 +84,12 @@
 
     textarea, input[type="text"] {
       font-family: 'Noto Sans Devanagari', sans-serif;
-      background: white;
-      border: 1px solid #d6cec0;
+      background: #2a2a2a;
+      border: 1px solid #444;
       border-radius: 20px;
       padding: 14px 18px;
       font-size: 0.95rem;
+      color: #fff;
       transition: 0.2s;
       width: 100%;
       outline: none;
@@ -95,9 +97,13 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     }
 
+    textarea::placeholder, input::placeholder {
+      color: #666;
+    }
+
     textarea:focus, input[type="text"]:focus {
-      border-color: #b8a48c;
-      box-shadow: 0 0 0 3px rgba(184, 164, 140, 0.2);
+      border-color: #ff4444;
+      box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.15);
     }
 
     textarea {
@@ -117,7 +123,7 @@
 
     .btns button {
       flex: 1 1 auto;
-      background: #1e2b3c;
+      background: #333;
       border: none;
       padding: 16px 18px;
       border-radius: 40px;
@@ -130,7 +136,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       letter-spacing: 0.5px;
       font-family: 'Noto Sans Devanagari', sans-serif;
     }
@@ -140,17 +146,17 @@
     }
 
     #generate {
-      background: #2d4b5c;
+      background: #cc0000;
     }
     #generate:hover {
-      background: #1f3a4a;
+      background: #aa0000;
     }
 
     #download {
-      background: #b78c6b;
+      background: #d4a017;
     }
     #download:hover {
-      background: #9e7a5d;
+      background: #b8890f;
     }
 
     /* ----- RIGHT PANEL (canvas) ----- */
@@ -158,7 +164,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #ece7df;
+      background: #1a1a1a;
       border-radius: 28px;
       padding: 12px;
       min-height: 400px;
@@ -171,10 +177,19 @@
       display: block;
       border-radius: 24px;
       background: #ffffff;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
       max-width: 100%;
       object-fit: contain;
       transition: 0.1s;
+    }
+
+    /* Loading indicator */
+    .loading {
+      color: #ff4444;
+      text-align: center;
+      font-size: 1.2rem;
+      padding: 20px;
+      display: none;
     }
 
     /* ----- 📱 MOBILE RESPONSIVE ----- */
@@ -247,7 +262,6 @@
       }
     }
 
-    /* small tweaks for very narrow */
     @media screen and (max-width: 360px) {
       .left h2 {
         font-size: 1.1rem;
@@ -282,6 +296,7 @@
       <button id="generate">✨ Generate</button>
       <button id="download">⬇️ Download PNG</button>
     </div>
+    <div class="loading" id="loadingMsg">⏳ Loading template...</div>
   </div>
 
   <!-- RIGHT PANEL -->
@@ -303,134 +318,211 @@
 
     const generateBtn = document.getElementById('generate');
     const downloadBtn = document.getElementById('download');
+    const loadingMsg = document.getElementById('loadingMsg');
 
-    // ---------- default sample (original template style) ----------
+    // ---------- Load template image from assets folder ----------
+    const templateImg = new Image();
+    templateImg.crossOrigin = 'anonymous';
+    let templateLoaded = false;
+
+    // Try to load template.jpg from assets folder
+    templateImg.src = 'assets/template.jpg';
+    
+    templateImg.onload = function() {
+      templateLoaded = true;
+      loadingMsg.style.display = 'none';
+      render();
+    };
+
+    templateImg.onerror = function() {
+      // If template not found, use fallback
+      console.warn('template.jpg not found in assets folder. Using fallback.');
+      templateLoaded = false;
+      loadingMsg.style.display = 'none';
+      render();
+    };
+
+    // ---------- Default text ----------
     const defaultHeadline = 'मारवाड़ में बड़ी घटना, सैकड़ों लोग प्रभावित';
     const defaultBody = 'जोधपुर। मारवाड़ क्षेत्र में भारी बारिश के बाद नदियाँ उफान पर हैं। प्रशासन ने एहतियाती कदम उठाते हुए कई गाँवों को सुरक्षित स्थानों पर शिफ्ट किया है। मौसम विभाग ने आगामी 24 घंटों में और बारिश की चेतावनी दी है।';
     const defaultDate = 'शनिवार, 26 जुलाई 2026';
 
-    // fill defaults if empty
     if (!headlineEl.value) headlineEl.value = defaultHeadline;
     if (!bodyEl.value) bodyEl.value = defaultBody;
     if (!dateEl.value) dateEl.value = defaultDate;
 
-    // ---------- drawing engine (restored original template look) ----------
+    // ---------- Drawing engine with template background ----------
     function drawNewsCard(headline, body, date) {
       const w = 1920, h = 1920;
 
-      // clean text
       const cleanHeadline = (headline || '').trim() || 'शीर्षक';
       const cleanBody = (body || '').trim() || 'समाचार पाठ...';
       const cleanDate = (date || '').trim() || 'तिथि';
 
-      // canvas size
       canvas.width = w;
       canvas.height = h;
 
-      // ----- background (newspaper style) -----
-      ctx.fillStyle = '#fcf8f0';
-      ctx.fillRect(0, 0, w, h);
+      // ----- Draw template background if loaded -----
+      if (templateLoaded && templateImg.complete) {
+        ctx.drawImage(templateImg, 0, 0, w, h);
+      } else {
+        // Fallback: dark background with BREAKING NEWS watermark
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(0, 0, w, h);
 
-      // soft border
-      ctx.shadowColor = 'rgba(0,0,0,0.02)';
+        ctx.save();
+        ctx.globalAlpha = 0.06;
+        ctx.fillStyle = '#ff0000';
+        ctx.font = 'bold 140px "Noto Sans Devanagari", "Arial Black", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        const positions = [
+          { x: w/2, y: h/2 - 300 },
+          { x: w/2, y: h/2 + 200 },
+          { x: w/2 - 500, y: h/2 - 500 },
+          { x: w/2 + 500, y: h/2 - 500 },
+          { x: w/2 - 500, y: h/2 + 500 },
+          { x: w/2 + 500, y: h/2 + 500 },
+          { x: w/2, y: h/2 - 700 },
+          { x: w/2, y: h/2 + 700 },
+          { x: w/2 - 800, y: h/2 },
+          { x: w/2 + 800, y: h/2 },
+        ];
+
+        positions.forEach(pos => {
+          ctx.fillText('BREAKING NEWS', pos.x, pos.y);
+        });
+        ctx.restore();
+
+        // Red border
+        ctx.shadowColor = 'rgba(255, 0, 0, 0.2)';
+        ctx.shadowBlur = 30;
+        ctx.strokeStyle = '#cc0000';
+        ctx.lineWidth = 8;
+        ctx.strokeRect(30, 30, w - 60, h - 60);
+        ctx.shadowBlur = 0;
+        ctx.strokeStyle = '#ff3333';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(50, 50, w - 100, h - 100);
+
+        // Top bar
+        ctx.fillStyle = '#cc0000';
+        ctx.fillRect(60, 60, w - 120, 70);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 48px "Noto Sans Devanagari", "Arial Black", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('🔴 BREAKING NEWS', w/2, 95);
+      }
+
+      // ----- Overlay text on template -----
+      // Header: Marwar Time
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 80px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+      ctx.shadowBlur = 20;
+      ctx.fillText('📰 मारवाड़ टाइम', w/2, 170);
       ctx.shadowBlur = 0;
 
-      // ----- decorative top bar (original) -----
-      ctx.fillStyle = '#1e2b3c';
-      ctx.fillRect(0, 0, w, 18);
+      // Sub line
+      ctx.fillStyle = '#ff6666';
+      ctx.font = '36px "Noto Sans Devanagari", sans-serif';
+      ctx.fillText('—— समाचार स्टूडियो ——', w/2, 260);
 
-      // ----- header: Marwar Time (original) -----
-      ctx.fillStyle = '#1e2b3c';
-      ctx.font = 'bold 74px "Noto Sans Devanagari", "Segoe UI", sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      ctx.fillText('📰 मारवाड़ टाइम', w/2, 52);
-
-      // sub line (original)
-      ctx.fillStyle = '#5b4c3b';
-      ctx.font = '32px "Noto Sans Devanagari", sans-serif';
-      ctx.fillText('—— समाचार स्टूडियो ——', w/2, 134);
-
-      // ---- date line (original) ----
-      ctx.fillStyle = '#3e4a5a';
-      ctx.font = '38px "Noto Sans Devanagari", sans-serif';
+      // Date
+      ctx.fillStyle = '#cccccc';
+      ctx.font = '40px "Noto Sans Devanagari", sans-serif';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'top';
-      ctx.fillText(cleanDate, w - 72, 170);
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+      ctx.shadowBlur = 15;
+      ctx.fillText(cleanDate, w - 100, 310);
+      ctx.shadowBlur = 0;
 
-      // ---- decorative line (original) ----
+      // Decorative line
       ctx.beginPath();
-      ctx.moveTo(60, 232);
-      ctx.lineTo(w - 60, 232);
-      ctx.strokeStyle = '#d4c9b8';
-      ctx.lineWidth = 4;
+      ctx.moveTo(100, 370);
+      ctx.lineTo(w - 100, 370);
+      ctx.strokeStyle = '#ff3333';
+      ctx.lineWidth = 3;
       ctx.stroke();
 
-      // ---- HEADLINE (big, bold) ----
+      // HEADLINE
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
-      ctx.fillStyle = '#0f1a26';
-      ctx.font = 'bold 94px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+      ctx.fillStyle = '#ff2222';
+      ctx.font = 'bold 100px "Noto Sans Devanagari", "Segoe UI", sans-serif';
       
-      // word wrap for headline (max 2 lines)
       const headlineLines = wrapText(ctx, cleanHeadline, w - 200, 2);
-      let headlineY = 280;
+      let headlineY = 420;
       headlineLines.forEach((line, idx) => {
         if (idx === 0) {
-          ctx.font = 'bold 94px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+          ctx.font = 'bold 100px "Noto Sans Devanagari", "Segoe UI", sans-serif';
         } else {
-          ctx.font = 'bold 80px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+          ctx.font = 'bold 84px "Noto Sans Devanagari", "Segoe UI", sans-serif';
         }
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+        ctx.shadowBlur = 15;
         ctx.fillText(line, w/2, headlineY);
-        headlineY += 106;
+        ctx.shadowBlur = 0;
+        headlineY += 110;
       });
 
-      // ---- BODY text (multi-line, justified-like) ----
+      // BODY text
       ctx.textAlign = 'left';
       ctx.textBaseline = 'top';
-      ctx.fillStyle = '#1e2b3c';
-      ctx.font = '42px "Noto Sans Devanagari", "Segoe UI", sans-serif';
+      ctx.fillStyle = '#e0e0e0';
+      ctx.font = '44px "Noto Sans Devanagari", "Segoe UI", sans-serif';
 
-      const bodyStartY = Math.max(headlineY + 40, 470);
-      const maxBodyWidth = w - 180;
-      const bodyLines = wrapText(ctx, cleanBody, maxBodyWidth, 12); // max 12 lines
+      const bodyStartY = Math.max(headlineY + 50, 600);
+      const maxBodyWidth = w - 200;
+      const bodyLines = wrapText(ctx, cleanBody, maxBodyWidth, 12);
 
       let bodyY = bodyStartY;
-      const lineHeight = 68;
-      const maxLines = 10; // keep inside canvas
+      const lineHeight = 72;
+      const maxLines = 10;
 
       for (let i = 0; i < Math.min(bodyLines.length, maxLines); i++) {
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        ctx.shadowBlur = 10;
         ctx.fillText(bodyLines[i], 100, bodyY);
+        ctx.shadowBlur = 0;
         bodyY += lineHeight;
       }
 
-      // if more lines, show ellipsis
       if (bodyLines.length > maxLines) {
-        ctx.font = '40px "Noto Sans Devanagari", sans-serif';
-        ctx.fillStyle = '#4d3e2e';
+        ctx.font = '42px "Noto Sans Devanagari", sans-serif';
+        ctx.fillStyle = '#ff6666';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        ctx.shadowBlur = 10;
         ctx.fillText('… पूरी खबर पढ़ें', 100, bodyY);
+        ctx.shadowBlur = 0;
       }
 
-      // ---- footer line (original) ----
-      ctx.fillStyle = '#d4c9b8';
-      ctx.fillRect(60, h - 110, w - 120, 4);
+      // Footer
+      ctx.fillStyle = '#ff3333';
+      ctx.fillRect(100, h - 130, w - 200, 3);
 
-      // footer text (original)
-      ctx.fillStyle = '#5b4c3b';
-      ctx.font = '30px "Noto Sans Devanagari", sans-serif';
+      ctx.fillStyle = '#888';
+      ctx.font = '32px "Noto Sans Devanagari", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'bottom';
-      ctx.fillText('⏺ मारवाड़ टाइम न्यूज़ स्टूडियो · 2026', w/2, h - 42);
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+      ctx.shadowBlur = 10;
+      ctx.fillText('⏺ मारवाड़ टाइम न्यूज़ स्टूडियो · 2026', w/2, h - 55);
+      ctx.shadowBlur = 0;
 
-      // small watermark (original)
-      ctx.fillStyle = '#b8a48c';
-      ctx.font = '24px "Noto Sans Devanagari", sans-serif';
+      ctx.fillStyle = '#555';
+      ctx.font = '26px "Noto Sans Devanagari", sans-serif';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'bottom';
-      ctx.fillText('marwartime.in', w - 60, h - 14);
+      ctx.fillText('marwartime.in', w - 100, h - 25);
     }
 
-    // ----- text wrapping helper (respects Devanagari) -----
+    // ----- Text wrapping helper -----
     function wrapText(ctx, text, maxWidth, maxLines = 20) {
       if (!text) return [''];
       const words = text.split(' ');
@@ -452,14 +544,13 @@
       if (currentLine && lines.length < maxLines) {
         lines.push(currentLine);
       }
-      // edge case: if a single word is too long, force break (rare)
       if (lines.length === 0) {
         lines.push(text);
       }
       return lines;
     }
 
-    // ---------- update canvas ----------
+    // ---------- Update canvas ----------
     function render() {
       const headline = headlineEl.value || 'शीर्षक';
       const body = bodyEl.value || 'समाचार...';
@@ -467,41 +558,36 @@
       drawNewsCard(headline, body, date);
     }
 
-    // ---------- download PNG ----------
+    // ---------- Download PNG ----------
     function downloadPNG() {
-      // re-render to be safe
       render();
       const link = document.createElement('a');
-      link.download = `marwar-news-${Date.now()}.png`;
+      link.download = `marwar-breaking-news-${Date.now()}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
     }
 
-    // ---------- event listeners ----------
+    // ---------- Event listeners ----------
     generateBtn.addEventListener('click', render);
-
     downloadBtn.addEventListener('click', downloadPNG);
 
-    // also render on input change (optional)
     [headlineEl, bodyEl, dateEl].forEach(el => {
       el.addEventListener('input', render);
     });
 
-    // initial render
-    render();
-
-    // handle resize – just re-render (canvas keeps quality)
-    window.addEventListener('resize', () => {
-      // no-op, canvas resolution fixed, but we keep crisp
-    });
-
-    // extra: when loading, ensure defaults are shown
-    window.addEventListener('load', function() {
+    // Initial render after template loads
+    if (templateLoaded) {
       render();
-    });
+    } else {
+      // Show loading if template not yet loaded
+      loadingMsg.style.display = 'block';
+    }
 
-    // small fix: if canvas gets blurry due to css, we keep internal resolution
-    // using fixed 1920x1920
+    window.addEventListener('load', function() {
+      if (templateLoaded) {
+        render();
+      }
+    });
   })();
 </script>
 </body>
