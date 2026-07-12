@@ -148,49 +148,53 @@ async function initStudio(){
 
 }
 
-initStudio();
 //-------------------------------------
 // share image 
 //-------------------------------------
 
 async function shareImage() {
 
-    console.log("navigator.share =", !!navigator.share);
-    console.log("navigator.canShare =", !!navigator.canShare);
-
     render();
 
-    const blob = await new Promise(resolve =>
-        canvas.toBlob(resolve, "image/png")
-    );
-
-    const file = new File([blob], "news.png", { type: "image/png" });
-
-    console.log("File Size:", file.size);
-
     if (!navigator.share) {
-        alert("navigator.share NOT supported");
+        alert("Share not supported.");
         return;
     }
 
-    if (navigator.canShare && !navigator.canShare({ files: [file] })) {
-        alert("Browser cannot share files");
-        return;
-    }
+    canvas.toBlob(async function(blob){
 
-    try {
-        await navigator.share({
-            files: [file],
-            title: "Marwar Time",
-            text: "Breaking News"
-        });
+        const file = new File(
+            [blob],
+            "MarwarTimeNews.png",
+            { type: "image/png" }
+        );
 
-        alert("Shared Successfully");
+        try {
 
-    } catch (e) {
-        alert(e.message);
-        console.log(e);
-    }
+            if (navigator.canShare &&
+                navigator.canShare({ files: [file] })) {
+
+                await navigator.share({
+                    title: "Marwar Time News",
+                    files: [file]
+                });
+
+            } else {
+
+                // Fallback
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(blob);
+                a.download = "MarwarTimeNews.png";
+                a.click();
+
+            }
+
+        } catch(err){
+            console.log(err);
+        }
+
+    },"image/png");
+
 }
 
 //-------------------------------------
