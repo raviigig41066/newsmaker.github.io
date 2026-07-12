@@ -16,7 +16,8 @@ const dateInput = document.getElementById("date");
 // Buttons
 const generateBtn = document.getElementById("generate");
 const downloadBtn = document.getElementById("download");
-const shareBtn = document.getElementById('share');
+const shareBtn = document.getElementById("share")
+.addEventListener("click", shareImage);
 
 // Template Image
 const template = new Image();
