@@ -16,8 +16,7 @@ const dateInput = document.getElementById("date");
 // Buttons
 const generateBtn = document.getElementById("generate");
 const downloadBtn = document.getElementById("download");
-const shareBtn = document.getElementById("share")
-.addEventListener("click", shareImage);
+const shareBtn = document.getElementById("share");
 
 // Template Image
 const template = new Image();
@@ -155,7 +154,7 @@ async function initStudio(){
 
 async function shareImage() {
 
-    render();
+    drawCard();
 
     if (!navigator.share) {
         alert("Share not supported.");
