@@ -16,6 +16,7 @@ const dateInput = document.getElementById("date");
 // Buttons
 const generateBtn = document.getElementById("generate");
 const downloadBtn = document.getElementById("download");
+const shareBtn = document.getElementById('share');
 
 // Template Image
 const template = new Image();
@@ -48,6 +49,8 @@ dateInput.addEventListener("input", drawCard);
 generateBtn.addEventListener("click", drawCard);
 
 downloadBtn.addEventListener("click", downloadPNG);
+
+shareBtn.addEventListener("click", shareImage);
 
 //-------------------------------------
 // Main Draw
@@ -146,6 +149,47 @@ async function initStudio(){
 }
 
 initStudio();
+
+async function shareImage() {
+
+  render(); // Latest image render
+
+  if (!navigator.share) {
+    alert("Your browser does not support Share.");
+    return;
+  }
+
+  canvas.toBlob(async (blob) => {
+
+    const file = new File(
+      [blob],
+      "marwar-breaking-news.png",
+      { type: "image/png" }
+    );
+
+    try {
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+
+        await navigator.share({
+          title: "Marwar Time News",
+          text: "Latest Breaking News",
+          files: [file]
+        });
+
+      } else {
+
+        alert("File sharing not supported on this browser.");
+
+      }
+
+    } catch (err) {
+      console.log(err);
+    }
+
+  }, "image/png");
+
+}
 
 //-------------------------------------
 // Window Resize
