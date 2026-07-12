@@ -149,46 +149,48 @@ async function initStudio(){
 }
 
 initStudio();
+//-------------------------------------
+// share image 
+//-------------------------------------
 
 async function shareImage() {
 
-  render(); // Latest image render
+    console.log("navigator.share =", !!navigator.share);
+    console.log("navigator.canShare =", !!navigator.canShare);
 
-  if (!navigator.share) {
-    alert("Your browser does not support Share.");
-    return;
-  }
+    render();
 
-  canvas.toBlob(async (blob) => {
-
-    const file = new File(
-      [blob],
-      "marwar-breaking-news.png",
-      { type: "image/png" }
+    const blob = await new Promise(resolve =>
+        canvas.toBlob(resolve, "image/png")
     );
 
-    try {
+    const file = new File([blob], "news.png", { type: "image/png" });
 
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    console.log("File Size:", file.size);
 
-        await navigator.share({
-          title: "Marwar Time News",
-          text: "Latest Breaking News",
-          files: [file]
-        });
-
-      } else {
-
-        alert("File sharing not supported on this browser.");
-
-      }
-
-    } catch (err) {
-      console.log(err);
+    if (!navigator.share) {
+        alert("navigator.share NOT supported");
+        return;
     }
 
-  }, "image/png");
+    if (navigator.canShare && !navigator.canShare({ files: [file] })) {
+        alert("Browser cannot share files");
+        return;
+    }
 
+    try {
+        await navigator.share({
+            files: [file],
+            title: "Marwar Time",
+            text: "Breaking News"
+        });
+
+        alert("Shared Successfully");
+
+    } catch (e) {
+        alert(e.message);
+        console.log(e);
+    }
 }
 
 //-------------------------------------
